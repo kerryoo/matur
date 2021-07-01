@@ -1,0 +1,20 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-matur-dev-160357-authRole",
+      "UnauthRoleArn": "arn:aws:iam::302383978482:role/amplify-matur-dev-160357-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::302383978482:role/amplify-matur-dev-160357-authRole",
+      "Region": "us-east-2",
+      "DeploymentBucketName": "amplify-matur-dev-160357-deployment",
+      "UnauthRoleName": "amplify-matur-dev-160357-unauthRole",
+      "StackName": "amplify-matur-dev-160357",
+      "StackId": "arn:aws:cloudformation:us-east-2:302383978482:stack/amplify-matur-dev-160357/db7b3970-daaf-11eb-a7e7-02cee4a508ca",
+      "AmplifyAppId": "djbup3y3v8234"
+    },
+    "categories": {
+      "auth": {
+        "mature8052d60": {}
+      }
+    }
+  }
+}

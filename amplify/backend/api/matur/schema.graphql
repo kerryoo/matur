@@ -1,0 +1,62 @@
+type User @model {
+  id: ID!
+  username: String!
+  firstName: String!
+  lastName: String!
+  favoriteCuisines: [UserCuisine!] @connection(keyName:"byUser", fields: ["id"])
+  savedRecipies: [UserRecipe!] @connection(keyName: "byUser", fields: ["id"])
+}
+
+type UserRecipe 
+  @model(queries: null)
+  @key(name: "byUser", fields: ["userID", "recipeID"])
+  @key(name: "byUserRecipe", fields: ["recipeID", "userID"]) {
+  id: ID!
+  userID: ID!
+  recipeID: ID!
+  user: User! @connection(fields: ["userID"])
+  recipe: Recipe! @connection(fields: ["recipeID"])
+}
+
+type Recipe @model
+  @key(name: "byCuisine", fields: ["cuisineID"]) {
+  id: ID!
+  cuisineID: ID!
+  cuisine: Cuisine @connection(fields: ["cuisineID"])
+  name: String!
+  author: User!
+  tags: [String!]!
+  activeTime: Int!
+  totalTime: Int!
+  ingredients: [Ingredient]!
+  directions: [String]!
+  servingsLow: Int!
+  servingsHigh: Int
+  favoritesCount: Int!
+  userFavorites: [UserRecipe] @connection(keyName: "byUserRecipe", fields: ["id"])
+}
+
+type UserCuisine
+  @model(queries: null)
+  @key(name: "byUser", fields: ["userID", "cuisineID"])
+  @key(name: "byUserCuisine", fields: ["cuisineID", "userID"]) {
+  id: ID!
+  userID: ID!
+  cuisineID: ID!
+  user: User! @connection(fields: ["userID"])
+  cuisine: Cuisine! @connection(fields: ["cuisineID"])
+
+}
+
+type Cuisine @model {
+  id: ID!
+  name: String!
+  recipes: [Recipe] @connection(keyName: "byCuisine", fields: ["id"])
+  users: [UserCuisine] @connection(keyName: "byUserCuisine", fields: ["id"])
+}
+
+type Ingredient {
+  name: String!
+  unit: String!
+  quantity: Float!
+}
