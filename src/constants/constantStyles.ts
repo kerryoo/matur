@@ -61,8 +61,8 @@ export const componentStyles = StyleSheet.create({
     borderWidth: 3,
     justifyContent: "center",
     alignItems: "center",
-    width: "50%",
     padding: 10,
     marginBottom: 20,
+    paddingHorizontal: "25%"
   }
 })

@@ -1,12 +1,11 @@
-import { StatusBar } from "expo-status-bar";
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
-import { createStackNavigator } from "@react-navigation/stack";
-import { WelcomeScreen } from "./src/screens/WelcomeScreen";
-import { SignInScreen } from "./src/screens/SignInScreen";
-import { SignOutScreen } from "./src/screens/SignOutScreen";
+import { createStackNavigator, HeaderBackButton } from "@react-navigation/stack";
+import  WelcomeScreen  from "./src/screens/WelcomeScreen";
+import  SignInScreen  from "./src/screens/SignInScreen";
+import  SignUpScreen  from "./src/screens/SignUpScreen";
 import AppLoading from "expo-app-loading";
+import { BackButton, HeaderLogo } from "./src/components/Header";
 
 import {
   useFonts,
@@ -30,8 +29,9 @@ import {
   Poppins_900Black_Italic,
 } from "@expo-google-fonts/poppins";
 
-const Stack = createStackNavigator();
 
+
+const Stack = createStackNavigator();
 export default function App() {
   let [fontsLoaded] = useFonts({
     Poppins_100Thin,
@@ -60,24 +60,26 @@ export default function App() {
     return (
       <NavigationContainer>
         <Stack.Navigator
-          screenOptions={{
-            headerShown: false,
+          screenOptions = {{ headerTransparent: true,
+            headerTitle: () => <HeaderLogo  />,
+            headerBackImage: () => <BackButton />,
+            headerBackTitleVisible: false,
+
+          
           }}
         >
-          <Stack.Screen name="Welcome" component={WelcomeScreen} />
+          <Stack.Screen
+            name="Welcome"
+            component={WelcomeScreen}
+            options={{
+              headerShown: false,
+            }}
+          />
           <Stack.Screen name="SignIn" component={SignInScreen} />
-          <Stack.Screen name="SignOut" component={SignOutScreen} />
+          <Stack.Screen name="SignUp" component={SignUpScreen} />
         </Stack.Navigator>
       </NavigationContainer>
     );
   }
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-});
