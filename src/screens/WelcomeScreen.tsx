@@ -9,7 +9,7 @@ const WelcomeScreen = ({ navigation }) => {
     
     <View style={styles.background}>
       <ImageBackground
-        source={require("../../assets/background-panels/background-panel-1.png")}
+        source={require("../../assets/welcome-screen-background-image.png")}
         style={imageStyles.backgroundImage}
       >
         <View style={styles.container}>

@@ -53,6 +53,12 @@ export const textStyles = StyleSheet.create({
     textDecorationLine: "underline",
     textDecorationColor: colors.interactive,
   },
+  input: {
+    color: colors.default,
+    fontFamily: "Poppins_400Regular",
+    fontSize: 26,
+    flex: 1,
+  },
 })
 
 export const componentStyles = StyleSheet.create({

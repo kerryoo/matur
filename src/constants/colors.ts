@@ -5,4 +5,5 @@ export default {
     default: "#4F6367",
     error: "#FE5F55",
     transparent: "transparent",
+    disabled: "83979b",
 }

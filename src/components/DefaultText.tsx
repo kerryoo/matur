@@ -11,7 +11,8 @@ type Props = {
     | "label"
     | "largeBody"
     | "guides"
-    | "link";
+    | "link"
+    | "input";
   children: React.ReactNode;
 } & TextProps;
 
@@ -24,6 +25,7 @@ const getStyle = {
   largeBody: textStyles.largeBody,
   guides: textStyles.guides,
   link: textStyles.link,
+  input: textStyles.input,
 };
 
 export const DefaultText: React.FC<Props> = ({
