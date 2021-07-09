@@ -6,22 +6,46 @@ import {textStyles} from "../constants/constantStyles";
 
 interface Props {
   placeholder: string;
-  textContentType: "name" | "familyName" | "password" | "username";
-  startingCharacter?: string;
+  textContentType: "name" | "familyName" | "password" | "username" | "telephoneNumber";
   onChangeText: any;
   value: string;
+}
+
+interface AdditionalProps {
+  autoCorrect: boolean,
+  autoCapitalize: "none" | "sentences" | "words" | "characters",
+  keyboardType: 'default' | 'email-address' | 'numeric' | 'phone-pad' | 'ascii-capable' | 'numbers-and-punctuation' | 'url' | 'number-pad' | 'name-phone-pad' | 'decimal-pad' | 'twitter' | 'web-search' | 'visible-password',
+  maxLength: number,
+  spellCheck: boolean,
+  secureTextEntry: boolean,
 }
 
 const FieldInput = ({
   placeholder,
   textContentType,
-  startingCharacter,
   onChangeText,
   value,
 }: Props) => {
+  let additionalProps : AdditionalProps= { //default is for name/family name
+    autoCorrect: false,
+    autoCapitalize: "words",
+    keyboardType: "default",
+    maxLength: 30,
+    spellCheck: false,
+    secureTextEntry: false,
+  };
+
+  if (textContentType === "password") {
+    additionalProps.autoCapitalize = "none";
+    additionalProps.secureTextEntry = true;
+  } else if (textContentType === "username") {
+    additionalProps.autoCapitalize = "none";
+  } else if (textContentType === "telephoneNumber") {
+    additionalProps.keyboardType = "phone-pad";
+  }
+
   return (
     <View style={styles.container}>
-      <DefaultText typography="display" style={{alignItems: "center"}}>{startingCharacter}</DefaultText>
       <TextInput
         style={textStyles.input}
         placeholder={placeholder}
@@ -29,6 +53,7 @@ const FieldInput = ({
         onChangeText={onChangeText}
         value={value}
         textContentType={textContentType}
+        {...additionalProps}
       />
     </View>
   );
@@ -40,8 +65,6 @@ const styles = StyleSheet.create({
   container: {
     width: "90%",
     flexDirection: "row",
-    alignItems: "center",
-    marginHorizontal: "5%",
     marginTop: 30,
     borderBottomWidth: 3,
     borderColor: colors.default,

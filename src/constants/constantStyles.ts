@@ -6,7 +6,7 @@ export const imageStyles = StyleSheet.create({
     backgroundImage: {
         flex: 1,
         resizeMode: "cover",
-        justifyContent: "center",
+        width: "100%",
     }
 })
 
@@ -56,7 +56,7 @@ export const textStyles = StyleSheet.create({
   input: {
     color: colors.default,
     fontFamily: "Poppins_400Regular",
-    fontSize: 26,
+    fontSize: 16,
     flex: 1,
   },
 })
