@@ -1,6 +1,6 @@
 import React from "react";
 import { StyleSheet, TouchableOpacity } from "react-native";
-import { DefaultText } from "./DefaultText";
+import DefaultText from "./DefaultText";
 
 interface Props {
   title: string;

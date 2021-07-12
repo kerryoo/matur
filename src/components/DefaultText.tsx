@@ -1,5 +1,5 @@
 import React from "react";
-import { Text, TextProps, StyleSheet } from "react-native";
+import { Text, TextProps } from "react-native";
 import { textStyles } from "../constants/constantStyles";
 
 type Props = {
@@ -28,7 +28,7 @@ const getStyle = {
   input: textStyles.input,
 };
 
-export const DefaultText: React.FC<Props> = ({
+const DefaultText: React.FC<Props> = ({
   typography,
   children,
   ...props
@@ -49,3 +49,4 @@ export const DefaultText: React.FC<Props> = ({
     );
   }
 };
+export default DefaultText;

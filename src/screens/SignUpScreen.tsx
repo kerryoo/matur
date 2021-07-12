@@ -8,8 +8,8 @@ import {
   Button,
   Text,
 } from "react-native";
-import { imageStyles } from "../constants/constantStyles";
-import { DefaultText } from "../components/DefaultText";
+import { imageStyles, textStyles } from "../constants/constantStyles";
+import DefaultText from "../components/DefaultText";
 import PagerView from "react-native-pager-view";
 import SelectableOption from "../components/SelectableOption";
 import colors from "../constants/colors";
@@ -20,6 +20,7 @@ import {
   useBlurOnFulfill,
   useClearByFocusCell,
 } from "react-native-confirmation-code-field";
+import { useForm, Controller } from "react-hook-form";
 
 const SignUpScreen = ({ navigation }) => {
   const [progress, setProgress] = useState(0);
@@ -47,6 +48,13 @@ const SignUpScreen = ({ navigation }) => {
     authCode,
     setAuthCode,
   });
+
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+  const onSubmit = (data) => console.log(data);
 
   const readyForNextPage = () => {
     switch (progress) {
@@ -207,36 +215,87 @@ const SignUpScreen = ({ navigation }) => {
                 <DefaultText typography="smallBody">
                   You can always change this later.
                 </DefaultText>
-                <FieldInput
-                  placeholder="username"
-                  textContentType="username"
-                  onChangeText={setUsername}
-                  value={username}
+
+                <Controller
+                  control={control}
+                  rules={{
+                    required: true,
+                  }}
+                  render={({ field: { onChange, onBlur, value } }) => (
+                    <FieldInput
+                      placeholder="username"
+                      textContentType="username"
+                      onChangeText={setUsername}
+                      value={username}
+                    />
+                  )}
+                  name="username"
                 />
-                <FieldInput
-                  placeholder="password"
-                  textContentType="password"
-                  onChangeText={setPassword}
-                  value={password}
+                {errors.username && <Text>Hello</Text>}
+                <Controller
+                  control={control}
+                  rules={{
+                    required: true,
+                  }}
+                  render={({ field: { onChange, onBlur, value } }) => (
+                    <FieldInput
+                      placeholder="password"
+                      textContentType="password"
+                      onChangeText={setPassword}
+                      value={password}
+                    />
+                  )}
+                  name="password"
                 />
-                <FieldInput
-                  placeholder="confirm password"
-                  textContentType="password"
-                  onChangeText={setConfirmPassword}
-                  value={confirmPassword}
+                {errors.password && <Text>Hello</Text>}
+                <Controller
+                  control={control}
+                  rules={{
+                    required: true,
+                  }}
+                  render={({ field: { onChange, onBlur, value } }) => (
+                    <FieldInput
+                      placeholder="confirm password"
+                      textContentType="password"
+                      onChangeText={setConfirmPassword}
+                      value={confirmPassword}
+                    />
+                  )}
+                  name="confirmPassword"
                 />
-                <FieldInput
-                  placeholder="first name"
-                  textContentType="name"
-                  onChangeText={setFirstName}
-                  value={firstName}
+                {errors.confirmPassword && <Text>Hello</Text>}
+                <Controller
+                  control={control}
+                  rules={{
+                    required: true,
+                  }}
+                  render={({ field: { onChange, onBlur, value } }) => (
+                    <FieldInput
+                      placeholder="first name"
+                      textContentType="name"
+                      onChangeText={setFirstName}
+                      value={firstName}
+                    />
+                  )}
+                  name="firstName"
                 />
-                <FieldInput
-                  placeholder="last name"
-                  textContentType="familyName"
-                  onChangeText={setLastName}
-                  value={lastName}
+                {errors.firstName && <Text>Hello</Text>}
+                <Controller
+                  control={control}
+                  rules={{
+                    required: true,
+                  }}
+                  render={({ field: { onChange, onBlur, value } }) => (
+                    <FieldInput
+                      placeholder="last name"
+                      textContentType="familyName"
+                      onChangeText={setLastName}
+                      value={lastName}
+                    />
+                  )}
+                  name="lastName"
                 />
+                {errors.lastName && <Text>Hello</Text>}
               </View>
             </View>
           </ImageBackground>
@@ -279,29 +338,30 @@ const SignUpScreen = ({ navigation }) => {
                   Explore food cultures from all across the world with recipes,
                   restaurants, and articles.
                 </DefaultText>
-              
-                
               </View>
+              <View style={styles.oneTimeCodeContainer}>
                 <CodeField
                   ref={ref}
                   {...props}
                   value={authCode}
                   onChangeText={setAuthCode}
                   cellCount={4}
-                  rootStyle={styles.codeFieldRoot}
                   keyboardType="number-pad"
                   textContentType="oneTimeCode"
                   renderCell={({ index, symbol, isFocused }) => (
-                    <Text
+                    <View
                       key={index}
                       style={[styles.cell, isFocused && styles.focusCell]}
                       onLayout={getCellOnLayoutHandler(index)}
                     >
-                      {symbol || (isFocused ? <Cursor /> : null)}
-                    </Text>
+                      <Text style={styles.cellText}>
+                        {symbol || (isFocused ? <Cursor /> : null)}
+                      </Text>
+                    </View>
                   )}
                 />
-                </View>
+              </View>
+            </View>
           </ImageBackground>
         </View>
         <View style={styles.page} key="7">
@@ -437,21 +497,28 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "stretch",
   },
-  
-  root: { flex: 1, padding: 20,},
-  codeFieldRoot: { marginTop: 20, },
+
+  root: { flex: 1, padding: 20 },
   cell: {
     width: "15%",
     height: 80,
-    lineHeight: 38,
-    fontSize: 24,
-    borderWidth: 2,
-    borderBottomWidth: 5,
+    borderBottomWidth: 4,
     borderColor: colors.disabled,
-    textAlign: "center",
+    justifyContent: "flex-end",
     marginHorizontal: "2%",
   },
   focusCell: {
     borderColor: colors.default,
+  },
+  oneTimeCodeContainer: {
+    justifyContent: "flex-start",
+    flexDirection: "column",
+    flex: 20,
+  },
+  cellText: {
+    color: colors.default,
+    fontFamily: "Poppins_600SemiBold",
+    fontSize: 36,
+    textAlign: "center",
   },
 });

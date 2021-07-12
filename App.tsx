@@ -1,11 +1,17 @@
 import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
-import { createStackNavigator, HeaderBackButton } from "@react-navigation/stack";
-import  WelcomeScreen  from "./src/screens/WelcomeScreen";
-import  SignInScreen  from "./src/screens/SignInScreen";
-import  SignUpScreen  from "./src/screens/SignUpScreen";
+import {
+  createStackNavigator,
+  HeaderBackButton,
+} from "@react-navigation/stack";
+import WelcomeScreen from "./src/screens/WelcomeScreen";
+import SignInScreen from "./src/screens/SignInScreen";
+import SignUpScreen from "./src/screens/SignUpScreen";
+import ModalScreen from "./src/screens/ModalScreen";
+import HomeScreen from "./src/screens/HomeScreen";
 import AppLoading from "expo-app-loading";
 import { BackButton, HeaderLogo } from "./src/components/Header";
+import colors from "./src/constants/colors";
 
 import {
   useFonts,
@@ -29,9 +35,33 @@ import {
   Poppins_900Black_Italic,
 } from "@expo-google-fonts/poppins";
 
+const RootStack = createStackNavigator();
+const MainStack = createStackNavigator();
 
+const MainStackScreen = () => {
+  return (
+    <MainStack.Navigator
+      screenOptions={{
+        headerTransparent: true,
+        headerTitle: () => <HeaderLogo />,
+        headerBackImage: () => <BackButton />,
+        headerBackTitleVisible: false,
+      }}
+    >
+      <MainStack.Screen
+        name="Welcome"
+        component={WelcomeScreen}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <MainStack.Screen name="SignIn" component={SignInScreen} />
+      <MainStack.Screen name="SignUp" component={SignUpScreen} />
+      <MainStack.Screen name="HomeScreen" component={HomeScreen}/>
+    </MainStack.Navigator>
+  );
+};
 
-const Stack = createStackNavigator();
 export default function App() {
   let [fontsLoaded] = useFonts({
     Poppins_100Thin,
@@ -59,27 +89,26 @@ export default function App() {
   } else {
     return (
       <NavigationContainer>
-        <Stack.Navigator
-          screenOptions = {{ headerTransparent: true,
-            headerTitle: () => <HeaderLogo  />,
-            headerBackImage: () => <BackButton />,
-            headerBackTitleVisible: false,
-
-          
-          }}
+        <RootStack.Navigator
+          mode="modal"
+          screenOptions={{ headerShown: false }}
         >
-          <Stack.Screen
-            name="Welcome"
-            component={WelcomeScreen}
+
+          <RootStack.Screen name="Main" component={MainStackScreen} />
+          <RootStack.Screen
+            name="MyModal"
+            component={ModalScreen}
             options={{
-              headerShown: false,
+              cardOverlayEnabled: true,
+              gestureEnabled: true,
+              gestureResponseDistance: {vertical: 1000},
+              cardStyle: { backgroundColor: colors.transparent },
+              gestureDirection: "vertical",
             }}
           />
-          <Stack.Screen name="SignIn" component={SignInScreen} />
-          <Stack.Screen name="SignUp" component={SignUpScreen} />
-        </Stack.Navigator>
+
+        </RootStack.Navigator>
       </NavigationContainer>
     );
   }
 }
-

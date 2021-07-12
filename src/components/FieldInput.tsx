@@ -1,32 +1,56 @@
-import React, {useState} from "react";
-import { StyleSheet, TouchableOpacity, Text, View, TextInput } from "react-native";
-import { DefaultText } from "./DefaultText";
+import React, { useState } from "react";
+import {
+  StyleSheet,
+  View,
+  TextInput,
+} from "react-native";
 import colors from "../constants/colors";
-import {textStyles} from "../constants/constantStyles";
+import { textStyles } from "../constants/constantStyles";
 
 interface Props {
   placeholder: string;
-  textContentType: "name" | "familyName" | "password" | "username" | "telephoneNumber";
+  textContentType:
+    | "name"
+    | "familyName"
+    | "password"
+    | "username"
+    | "telephoneNumber";
   onChangeText: any;
+  onBlur: any;
   value: string;
 }
 
 interface AdditionalProps {
-  autoCorrect: boolean,
-  autoCapitalize: "none" | "sentences" | "words" | "characters",
-  keyboardType: 'default' | 'email-address' | 'numeric' | 'phone-pad' | 'ascii-capable' | 'numbers-and-punctuation' | 'url' | 'number-pad' | 'name-phone-pad' | 'decimal-pad' | 'twitter' | 'web-search' | 'visible-password',
-  maxLength: number,
-  spellCheck: boolean,
-  secureTextEntry: boolean,
+  autoCorrect: boolean;
+  autoCapitalize: "none" | "sentences" | "words" | "characters";
+  keyboardType:
+    | "default"
+    | "email-address"
+    | "numeric"
+    | "phone-pad"
+    | "ascii-capable"
+    | "numbers-and-punctuation"
+    | "url"
+    | "number-pad"
+    | "name-phone-pad"
+    | "decimal-pad"
+    | "twitter"
+    | "web-search"
+    | "visible-password";
+  maxLength: number;
+  spellCheck: boolean;
+  secureTextEntry: boolean;
 }
 
 const FieldInput = ({
   placeholder,
   textContentType,
   onChangeText,
+  onBlur,
   value,
 }: Props) => {
-  let additionalProps : AdditionalProps= { //default is for name/family name
+  let additionalProps: AdditionalProps = {
+    //default is for name/family name
     autoCorrect: false,
     autoCapitalize: "words",
     keyboardType: "default",
@@ -51,6 +75,7 @@ const FieldInput = ({
         placeholder={placeholder}
         placeholderTextColor={colors.disabled}
         onChangeText={onChangeText}
+        onBlur={onBlur}
         value={value}
         textContentType={textContentType}
         {...additionalProps}
@@ -67,6 +92,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     marginTop: 30,
     borderBottomWidth: 3,
-    borderColor: colors.default,
+    borderColor: colors.disabled,
+    alignSelf: "center",
   },
 });
