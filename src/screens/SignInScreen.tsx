@@ -14,7 +14,7 @@ const SignInScreen = ({ navigation }) => {
       >
         <View style={styles.container}>
           <DefaultText typography={"display"}>Sign in to Matur!</DefaultText>
-          <RoundButton title="Sign In" onPress={() => navigation.navigate("HomeScreen")}/>
+          <RoundButton title="Sign In" onPress={() => navigation.navigate("Home")}/>
         </View>
       </ImageBackground>
     </View>

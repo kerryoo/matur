@@ -4,11 +4,17 @@ import {
   createStackNavigator,
   HeaderBackButton,
 } from "@react-navigation/stack";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import WelcomeScreen from "./src/screens/WelcomeScreen";
 import SignInScreen from "./src/screens/SignInScreen";
 import SignUpScreen from "./src/screens/SignUpScreen";
 import ModalScreen from "./src/screens/ModalScreen";
-import HomeScreen from "./src/screens/HomeScreen";
+import ExploreScreen from "./src/screens/ExploreScreen";
+import FeedScreen from "./src/screens/FeedScreen";
+import LibraryScreen from "./src/screens/LibraryScreen";
+import ProfileScreen from "./src/screens/ProfileScreen";
+import RecipeLibraryScreen from "./src/screens/RecipeLibraryScreen";
+import RecipeScreen from "./src/screens/RecipeScreen";
 import AppLoading from "expo-app-loading";
 import { BackButton, HeaderLogo } from "./src/components/Header";
 import colors from "./src/constants/colors";
@@ -37,6 +43,18 @@ import {
 
 const RootStack = createStackNavigator();
 const MainStack = createStackNavigator();
+const Tab = createBottomTabNavigator();
+
+const Tabs = () => {
+  return (
+    <Tab.Navigator>
+      <Tab.Screen name="Explore" component={ExploreScreen} />
+      <Tab.Screen name="Feed" component={FeedScreen} />
+      <Tab.Screen name="Library" component={LibraryScreen} />
+      <Tab.Screen name="Profile" component={ProfileScreen} />
+    </Tab.Navigator>
+  );
+};
 
 const MainStackScreen = () => {
   return (
@@ -57,7 +75,29 @@ const MainStackScreen = () => {
       />
       <MainStack.Screen name="SignIn" component={SignInScreen} />
       <MainStack.Screen name="SignUp" component={SignUpScreen} />
-      <MainStack.Screen name="HomeScreen" component={HomeScreen}/>
+      <MainStack.Screen
+        name="Home"
+        component={Tabs}
+        options={{
+          headerLeft: () => null,
+          headerTransparent: false,
+        }}
+      />
+      <MainStack.Screen 
+        name="RecipeLibrary"
+        component={RecipeLibraryScreen}
+        options={{
+          headerTransparent: false,
+        }}
+      />
+      <MainStack.Screen 
+        name="Recipe"
+        component={RecipeScreen}
+        options={{
+          headerTransparent: false,
+        }}
+      />
+      
     </MainStack.Navigator>
   );
 };
@@ -93,7 +133,6 @@ export default function App() {
           mode="modal"
           screenOptions={{ headerShown: false }}
         >
-
           <RootStack.Screen name="Main" component={MainStackScreen} />
           <RootStack.Screen
             name="MyModal"
@@ -101,12 +140,11 @@ export default function App() {
             options={{
               cardOverlayEnabled: true,
               gestureEnabled: true,
-              gestureResponseDistance: {vertical: 1000},
+              gestureResponseDistance: { vertical: 1000 },
               cardStyle: { backgroundColor: colors.transparent },
               gestureDirection: "vertical",
             }}
           />
-
         </RootStack.Navigator>
       </NavigationContainer>
     );

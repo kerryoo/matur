@@ -4,12 +4,12 @@ import { imageStyles } from "../constants/constantStyles";
 import RoundButton from "../components/RoundButton";
 import DefaultText from "../components/DefaultText";
 
-const HomeScreen = ({ navigation }) => {
+const ProfileScreen = ({ navigation }) => {
   return (
     <View>
-      <DefaultText typography="display">HomeScreen</DefaultText>
+      <DefaultText typography="display">Profile</DefaultText>
     </View>
   );
 };
 
-export default HomeScreen;
+export default ProfileScreen;
